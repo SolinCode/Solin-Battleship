@@ -938,11 +938,18 @@ int main() {
 					system("cls");
 					for (int i = 0; i < 10; i++) {
 						for (int j = 0; j < 10; j++) {
-							if (mapGridComputerHide[i][j] == 13 < 0) {
-								endGameWinComputer = 1;
+							if (mapGridComputerHide[i][j] == 13) {
+								tempCounter1 += 1;
 							}
-							if (mapGridPlayer[i][j] == 13 < 0) {
+							if (mapGridPlayer[i][j] == 13) {
+								tempCounter2 += 1;
+							}
+
+							if (tempCounter2 == 15) {
 								endGameWinPlayer = 1;
+							}
+							if (tempCounter1 == 15) {
+								endGameWinComputer = 1;
 							}
 
 							if (mapGridComputerHide[i][j] == 12) {
