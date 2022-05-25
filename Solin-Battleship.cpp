@@ -14,6 +14,34 @@ void mapRender(int mapGrid[mapSize][mapSize]);
 int main() {
 	srand(time(NULL));
 
+	// Player
+	int mapGridPlayer[mapSize][mapSize]{ 0 }; // Карта игрока
+	int tempShipPlayer{};
+	int continueStepPlayer{};
+	int shipsLostPlayer{ 8 }; // Показывает сколько осталось кораблей у игрока
+	int endGameWinPlayer{};
+
+	bool shipsPlaceAutomatic{}; // Переменная для выбора режима расстановки кораблей ( автоматическая/ручная )
+
+	// Computer
+	int mapGridComputer[mapSize][mapSize]{ 0 }; // Карта компьютера
+	int mapGridComputerHide[mapSize][mapSize]{ 0 }; // Карта компьютера скрытая
+	int tempShipComputerHide{};
+	int continueStepComputer{};
+	int shipsLostComputer{ 8 }; // Показывает сколько осталось кораблей у компьютера
+	int endGameWinComputer{};
+
+	// Others
+	int shipsCounter{}; // Счетчик кораблей при построении карты
+
+	int tempShipX{};
+	int tempShipY{};
+
+	int tempCounter1{};
+	int tempCounter2{};
+
+	int tempRotation{};
+
 	while (true)
 	{
 		char what{};
@@ -33,32 +61,6 @@ int main() {
 				cin >> what;
 				if (what == '1') {
 				system("cls");
-
-				// Player
-				int mapGridPlayer[mapSize][mapSize]{ 0 }; // Карта игрока
-				int tempShipPlayer{};
-				int continueStepPlayer{};
-				int shipsLostPlayer{ 8 }; // Показывает сколько осталось кораблей у игрока
-				int endGameWinPlayer{};
-
-				bool shipsPlaceAutomatic{}; // Переменная для выбора режима расстановки кораблей ( автоматическая/ручная )
-
-				// Computer
-				int mapGridComputer[mapSize][mapSize]{ 0 }; // Карта компьютера
-				int mapGridComputerHide[mapSize][mapSize]{ 0 }; // Карта компьютера скрытая
-				int tempShipComputerHide{};
-				int continueStepComputer{};
-				int shipsLostComputer{ 8 }; // Показывает сколько осталось кораблей у компьютера
-				int endGameWinComputer{};
-
-				// Others
-				int shipsCounter{}; // Счетчик кораблей при построении карты
-
-				int tempShipX{};
-				int tempShipY{};
-
-				int tempCounter1{};
-				int tempCounter2{};
 
 				// Заполнение поля игрока сеткой
 				for (int i = 0; i < mapSize; i++) {
@@ -564,32 +566,6 @@ int main() {
 			else if (what == '2') {
 				system("cls");
 
-				// Player
-				int mapGridPlayer[mapSize][mapSize]{ 0 }; // Карта игрока
-				int tempShipPlayer{};
-				int continueStepPlayer{};
-				int shipsLostPlayer{ 8 }; // Показывает сколько осталось кораблей у игрока
-				int endGameWinPlayer{};
-
-				bool shipsPlaceAutomatic{}; // Переменная для выбора режима расстановки кораблей ( автоматическая/ручная )
-
-				// Computer
-				int mapGridComputer[mapSize][mapSize]{ 0 }; // Карта компьютера
-				int mapGridComputerHide[mapSize][mapSize]{ 0 }; // Карта компьютера скрытая
-				int tempShipComputerHide{};
-				int continueStepComputer{};
-				int shipsLostComputer{ 8 }; // Показывает сколько осталось кораблей у компьютера
-				int endGameWinComputer{};
-
-				// Others
-				int shipsCounter{}; // Счетчик кораблей при построении карты
-
-				int tempShipX{};
-				int tempShipY{};
-
-				int tempCounter1{};
-				int tempCounter2{};
-
 				// Заполнение поля игрока сеткой
 				for (int i = 0; i < mapSize; i++) {
 					mapGridPlayer[i][0] = i;
@@ -627,62 +603,113 @@ int main() {
 						tempShipX = rand() % 9 + 1;
 						tempShipY = rand() % 9 + 1;
 
-						if (mapGridPlayer[tempShipX][tempShipY] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY + 1] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY + 1] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY + 1] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY - 1] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY - 1] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY - 1] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY + 1] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY + 2] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY + 3] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY + 4] != 12 &&
+						tempRotation = rand() % 2 + 1;
 
-							mapGridPlayer[tempShipX][tempShipY+1] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY+2] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY+3] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY+4] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY+5] != 12 &&
+						if (tempRotation == 1) {
+							if (mapGridPlayer[tempShipX][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 2] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 3] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 4] != 12 &&
 
-							mapGridPlayer[tempShipX][tempShipY - 1] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY - 1] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY - 1] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY + 1] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY + 1] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY + 2] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY + 3] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY + 4] != 12 &&
-							mapGridPlayer[tempShipX + 1][tempShipY + 5] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY + 2] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY + 3] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY + 4] != 12 &&
-							mapGridPlayer[tempShipX - 1][tempShipY + 5] != 12 &&
-							mapGridPlayer[tempShipX][tempShipY + 5] != 12 &&
-							
-							mapGridPlayer[tempShipX][tempShipY + 1] == 00 &&
-							mapGridPlayer[tempShipX][tempShipY + 2] == 00 &&
-							mapGridPlayer[tempShipX][tempShipY + 3] == 00 &&
-							mapGridPlayer[tempShipX][tempShipY + 4] == 00 &&
-							mapGridPlayer[tempShipX][tempShipY + 5] == 00)
-						{
-							mapGridPlayer[tempShipX][tempShipY] = 12;
-							mapGridPlayer[tempShipX][tempShipY+1] = 12;
-							mapGridPlayer[tempShipX][tempShipY+2] = 12;
-							mapGridPlayer[tempShipX][tempShipY+3] = 12;
-							mapGridPlayer[tempShipX][tempShipY+4] = 12;
+								mapGridPlayer[tempShipX][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 2] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 3] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 4] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 5] != 12 &&
 
-							shipsCounter++;
+								mapGridPlayer[tempShipX][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY + 2] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY + 3] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY + 4] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY + 5] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY + 2] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY + 3] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY + 4] != 12 &&
+								mapGridPlayer[tempShipX - 1][tempShipY + 5] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY + 5] != 12 &&
+
+								mapGridPlayer[tempShipX][tempShipY + 1] == 00 &&
+								mapGridPlayer[tempShipX][tempShipY + 2] == 00 &&
+								mapGridPlayer[tempShipX][tempShipY + 3] == 00 &&
+								mapGridPlayer[tempShipX][tempShipY + 4] == 00 &&
+								mapGridPlayer[tempShipX][tempShipY + 5] == 00)
+							{
+								mapGridPlayer[tempShipX][tempShipY] = 12;
+								mapGridPlayer[tempShipX][tempShipY + 1] = 12;
+								mapGridPlayer[tempShipX][tempShipY + 2] = 12;
+								mapGridPlayer[tempShipX][tempShipY + 3] = 12;
+								mapGridPlayer[tempShipX][tempShipY + 4] = 12;
+
+								shipsCounter++;
+							}
+							else {
+								tempShipX = 0;
+								tempShipY = 0;
+							}
 						}
-						else {
-							tempShipX = 0;
-							tempShipY = 0;
+
+						if (tempRotation == 2) {
+							if (mapGridPlayer[tempShipX][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX + 2][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX + 3][tempShipY] != 12 &&
+								mapGridPlayer[tempShipX + 4][tempShipY] != 12 &&
+
+								mapGridPlayer[tempShipX][tempShipY+1] != 12 &&
+								mapGridPlayer[tempShipX-1][tempShipY+1] != 12 &&
+								mapGridPlayer[tempShipX][tempShipY-1] != 12 &&
+								mapGridPlayer[tempShipX-1][tempShipY-1] != 12 &&
+								mapGridPlayer[tempShipX-1][tempShipY] != 12 &&
+
+								mapGridPlayer[tempShipX][tempShipY] == 00 &&
+								mapGridPlayer[tempShipX + 1][tempShipY] == 0 &&
+								mapGridPlayer[tempShipX + 2][tempShipY] == 0 &&
+								mapGridPlayer[tempShipX + 3][tempShipY] == 0 &&
+								mapGridPlayer[tempShipX + 4][tempShipY] == 0 &&
+
+								mapGridPlayer[tempShipX + 1][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX + 2][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX + 3][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX + 4][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX + 5][tempShipY + 1] != 12 &&
+								mapGridPlayer[tempShipX + 1][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX + 2][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX + 3][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX + 4][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX + 5][tempShipY - 1] != 12 &&
+								mapGridPlayer[tempShipX + 5][tempShipY] != 12)
+							{
+								mapGridPlayer[tempShipX][tempShipY] = 12;
+								mapGridPlayer[tempShipX + 1][tempShipY] = 12;
+								mapGridPlayer[tempShipX + 2][tempShipY] = 12;
+								mapGridPlayer[tempShipX + 3][tempShipY] = 12;
+								mapGridPlayer[tempShipX + 4][tempShipY] = 12;
+
+								shipsCounter++;
+							}
+							else {
+								tempShipX = 0;
+								tempShipY = 0;
+							}
 						}
+
 						system("cls");
 					}
 					else if (shipsPlaceAutomatic == false) {
@@ -755,62 +782,113 @@ int main() {
 					tempShipX = rand() % 9 + 1;
 					tempShipY = rand() % 9 + 1;
 
-					if (mapGridComputerHide[tempShipX][tempShipY] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY + 1] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY + 1] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 1] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY - 1] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY - 1] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY - 1] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 1] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 2] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 3] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 4] != 12 &&
+					tempRotation = rand() % 2 + 1;
 
-						mapGridComputerHide[tempShipX][tempShipY + 1] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 2] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 3] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 4] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 5] != 12 &&
+					if (tempRotation == 1) {
+						if (mapGridComputerHide[tempShipX][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 2] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 3] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 4] != 12 &&
 
-						mapGridComputerHide[tempShipX][tempShipY - 1] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY - 1] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY - 1] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY + 1] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY + 1] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY + 2] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY + 3] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY + 4] != 12 &&
-						mapGridComputerHide[tempShipX + 1][tempShipY + 5] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY + 2] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY + 3] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY + 4] != 12 &&
-						mapGridComputerHide[tempShipX - 1][tempShipY + 5] != 12 &&
-						mapGridComputerHide[tempShipX][tempShipY + 5] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 2] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 3] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 4] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 5] != 12 &&
 
-						mapGridComputerHide[tempShipX][tempShipY + 1] == 00 &&
-						mapGridComputerHide[tempShipX][tempShipY + 2] == 00 &&
-						mapGridComputerHide[tempShipX][tempShipY + 3] == 00 &&
-						mapGridComputerHide[tempShipX][tempShipY + 4] == 00 &&
-						mapGridComputerHide[tempShipX][tempShipY + 5] == 00)
-					{
-						mapGridComputerHide[tempShipX][tempShipY] = 12;
-						mapGridComputerHide[tempShipX][tempShipY + 1] = 12;
-						mapGridComputerHide[tempShipX][tempShipY + 2] = 12;
-						mapGridComputerHide[tempShipX][tempShipY + 3] = 12;
-						mapGridComputerHide[tempShipX][tempShipY + 4] = 12;
+							mapGridComputerHide[tempShipX][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY + 2] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY + 3] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY + 4] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY + 5] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY + 2] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY + 3] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY + 4] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY + 5] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY + 5] != 12 &&
 
-						shipsCounter++;
+							mapGridComputerHide[tempShipX][tempShipY + 1] == 00 &&
+							mapGridComputerHide[tempShipX][tempShipY + 2] == 00 &&
+							mapGridComputerHide[tempShipX][tempShipY + 3] == 00 &&
+							mapGridComputerHide[tempShipX][tempShipY + 4] == 00 &&
+							mapGridComputerHide[tempShipX][tempShipY + 5] == 00)
+						{
+							mapGridComputerHide[tempShipX][tempShipY] = 12;
+							mapGridComputerHide[tempShipX][tempShipY + 1] = 12;
+							mapGridComputerHide[tempShipX][tempShipY + 2] = 12;
+							mapGridComputerHide[tempShipX][tempShipY + 3] = 12;
+							mapGridComputerHide[tempShipX][tempShipY + 4] = 12;
+
+							shipsCounter++;
+						}
+						else {
+							tempShipX = 0;
+							tempShipY = 0;
+						}
 					}
-					else {
-						tempShipX = 0;
-						tempShipY = 0;
+
+					if (tempRotation == 2) {
+						if (mapGridComputerHide[tempShipX][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX + 2][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX + 3][tempShipY] != 12 &&
+							mapGridComputerHide[tempShipX + 4][tempShipY] != 12 &&
+
+							mapGridComputerHide[tempShipX][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX - 1][tempShipY] != 12 &&
+
+							mapGridComputerHide[tempShipX][tempShipY] == 00 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY] == 0 &&
+							mapGridComputerHide[tempShipX + 2][tempShipY] == 0 &&
+							mapGridComputerHide[tempShipX + 3][tempShipY] == 0 &&
+							mapGridComputerHide[tempShipX + 4][tempShipY] == 0 &&
+
+							mapGridComputerHide[tempShipX + 1][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX + 2][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX + 3][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX + 4][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX + 5][tempShipY + 1] != 12 &&
+							mapGridComputerHide[tempShipX + 1][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX + 2][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX + 3][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX + 4][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX + 5][tempShipY - 1] != 12 &&
+							mapGridComputerHide[tempShipX + 5][tempShipY] != 12)
+						{
+							mapGridComputerHide[tempShipX][tempShipY] = 12;
+							mapGridComputerHide[tempShipX + 1][tempShipY] = 12;
+							mapGridComputerHide[tempShipX + 2][tempShipY] = 12;
+							mapGridComputerHide[tempShipX + 3][tempShipY] = 12;
+							mapGridComputerHide[tempShipX + 4][tempShipY] = 12;
+
+							shipsCounter++;
+						}
+						else {
+							tempShipX = 0;
+							tempShipY = 0;
+						}
 					}
+
 					system("cls");
 				}
 
