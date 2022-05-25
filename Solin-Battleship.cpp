@@ -1051,7 +1051,7 @@ int main() {
 		else if (what == '3') {
 			system("cls");
 
-			cout << "Coded by Solin4035\nhttps://github.com/SolinCode\nVersion: Beta-0.1-1";
+			cout << "Coded by Solin4035\nhttps://github.com/SolinCode";
 			cout << "\n1. Back\nSelect >> ";
 			cin >> what;
 		}
